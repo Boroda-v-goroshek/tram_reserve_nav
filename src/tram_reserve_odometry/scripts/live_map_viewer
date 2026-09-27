@@ -1,0 +1,9 @@
+#!/usr/bin/env python3
+"""Точка входа: отрисовка карты в реальном времени (rviz2) — маршрут +
+предсказанная и GT-позиции. Bag можно проиграть здесь (--bag) или вручную."""
+import sys
+
+from tram_reserve_odometry.live_map_viewer import main
+
+if __name__ == '__main__':
+    sys.exit(main() or 0)

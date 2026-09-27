@@ -1,0 +1,18 @@
+# StopResetRouteIntegrator — интегрирование по 1D-карте + сброс продольной ошибки s
+# на стоянках у остановок из maps/stops.yaml.
+# Модель — include/tram_reserve_odometry/plugins/stop_reset_route_integrator.hpp.
+reserve_odometry:
+  ros__parameters:
+    integrator:
+      stop_enabled: true       # сброс по остановкам
+      stop_teleport: false     # true — ставить ровно в точку остановки (K = 1), false — мягкий сброс K = σ²/(σ² + σ_ост²)
+      stop_v_still: 0.1        # «стоим», м/с (как при построении stops.yaml)
+      stop_t_still: 3.0        # стоим дольше — пробуем остановку, с (как в stops.yaml)
+      stop_sigma: 1.0          # разброс места стоянки base_link у остановки, м
+      stop_sigma_init: 0.5     # неопределённость s после выставки по RTK, м (+ поперечное отклонение выставки)
+      stop_drift_rel: 0.005    # систематическая ошибка пути, доля пройденного (масштаб колёс)
+      stop_drift_q: 0.05       # случайная ошибка пути, м/√м (проскальзывания)
+      stop_gate_k: 3.0         # окно поиска остановки, сигм
+      stop_gate_min: 3.0       # окно не меньше, м
+      stop_gate_max: 20.0      # окно не больше, м (остановки в stops.yaml — через ≥ 200 м)
+      stop_rearm_m: 50.0       # остановка снова доступна, когда отъехали от неё дальше, м

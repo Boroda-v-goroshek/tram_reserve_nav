@@ -1,0 +1,12 @@
+# Плагины пайплайна (pluginlib, plugins.xml): фильтр Калмана по двум тележкам с моделью
+# тягового привода по ручке (табличная характеристика + физика паспорта 71-911ЕМ) и
+# интегрирование по 1D-карте со сбросом ошибки пути на остановках — docs/plugins.md.
+reserve_odometry:
+  ros__parameters:
+    plugins:
+      preprocessor: tram::PassthroughPreprocessor
+      traction_model: tram::TableTractionModel
+      slip_detector: tram::AlwaysGoodSlipDetector
+      estimator: tram::KalmanWheelEstimator
+      integrator: tram::StopResetRouteIntegrator
+      position_initializer: tram::ZeroPositionInitializer

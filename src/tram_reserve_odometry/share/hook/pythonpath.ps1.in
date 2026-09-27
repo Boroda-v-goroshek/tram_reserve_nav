@@ -1,0 +1,2 @@
+# Генерируется CMake (см. CMakeLists.txt). Добавляет site-packages пакета в PYTHONPATH.
+colcon_prepend_unique_value PYTHONPATH "$env:COLCON_CURRENT_PREFIX/@PY_SITE@"

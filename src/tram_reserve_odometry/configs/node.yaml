@@ -1,0 +1,4 @@
+# Цикл ноды.
+reserve_odometry:
+  ros__parameters:
+    output_rate_hz: 20.0     # частота цикла и публикации (Гц)

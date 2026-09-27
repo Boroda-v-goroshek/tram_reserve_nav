@@ -1,0 +1,10 @@
+# Входные топики и единицы.
+# bogie_velocity_unit: "kmh" или "ms"; приводится в м/с в предобработке.
+reserve_odometry:
+  ros__parameters:
+    input:
+      front_bogie_velocity_topic: /vehicle/front_bogie_velocity
+      rear_bogie_velocity_topic: /vehicle/rear_bogie_velocity
+      driver_position_topic: /vehicle/driver_position_cmd
+      bogie_velocity_unit: kmh
+      driver_cmd_max: 15.0   # ручка int8 [-15, +15] -> нормировка в [-1, 1]

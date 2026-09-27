@@ -1,0 +1,37 @@
+<library path="tram_reserve_odometry_plugins">
+  <class name="tram::PassthroughPreprocessor"
+          type="tram::PassthroughPreprocessor"
+          base_class_type="tram::IPreprocessor">
+    <description>Дефолтный препроцессор: не трогает данные (только приведение единиц и presence-качество).</description>
+  </class>
+
+  <class name="tram::TableTractionModel"
+         type="tram::TableTractionModel"
+         base_class_type="tram::ITractionModel">
+    <description>Модель тягового привода: табличная характеристика f(u, v) — удельная сила на ободе по позиции ручки и скорости (maps/drive_map.csv).</description>
+  </class>
+
+  <class name="tram::AlwaysGoodSlipDetector"
+         type="tram::AlwaysGoodSlipDetector"
+         base_class_type="tram::ISlipDetector">
+    <description>Плейсхолдер детектора проскальзывания: всегда «без проскальзывания».</description>
+  </class>
+
+  <class name="tram::KalmanWheelEstimator"
+         type="tram::KalmanWheelEstimator"
+         base_class_type="tram::IStateEstimator">
+    <description>Фильтр Калмана [v, a, theta_T, theta_B, b] по двум тележкам: прогноз по модели тягового привода от ручки (fallback — кинематика Зингера), метки образцов, отбраковка «мёртвой» тележки, расхождения и скачков, ресинхронизация, ZUPT, прогноз к метке публикации.</description>
+  </class>
+
+  <class name="tram::StopResetRouteIntegrator"
+         type="tram::StopResetRouteIntegrator"
+         base_class_type="tram::IPositionIntegrator">
+    <description>RouteIntegrator + сброс продольной ошибки s на стоянках у остановок из maps/stops.yaml (окно по накопленной неопределённости пути).</description>
+  </class>
+
+  <class name="tram::ZeroPositionInitializer"
+         type="tram::ZeroPositionInitializer"
+         base_class_type="tram::IPositionInitializer">
+    <description>Инициализатор из настроенного начального положения/скорости (по умолчанию — начало координат).</description>
+  </class>
+</library>

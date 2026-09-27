@@ -1,0 +1,9 @@
+# Вагон 71-911ЕМ «Львёнок-Москва»: TF антенн GNSS в base_link (x вперёд, REP 103), м.
+# master (-9.873, 0, 3.0), rover (2.563, 0, 3.0); база тележек 7.55 м.
+# Паспорт вагона (масса, привод, колесо, габариты) входит в модель через коэффициенты
+# drive.yaml; вывод — docs/physical_model.md.
+reserve_odometry:
+  ros__parameters:
+    vehicle:
+      master_antenna_x: -9.873
+      rover_antenna_x: 2.563

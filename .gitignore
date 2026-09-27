@@ -1,0 +1,28 @@
+# ROS 2 / colcon build artifacts
+build/
+install/
+log/
+results/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.venv/
+venv/
+
+# Datasets / large local data (never commit)
+*.db3
+*.bag
+
+# Editors / OS
+.vscode/
+.idea/
+*.swp
+.DS_Store
+
+.bash_history
+dataset/
+.cache/
+.rviz2/

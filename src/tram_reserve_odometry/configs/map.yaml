@@ -1,0 +1,42 @@
+# 1D-карта маршрута + GNSS-выставка и коррекция положения.
+# reference — опорная точка ENU карты (в ней заданы maps/route_*.csv).
+# Файлы карты: пусто = share/tram_reserve_odometry/maps/.
+reserve_odometry:
+  ros__parameters:
+    map:
+      enabled: true
+      position_antenna: master
+      orientation_antenna: rover
+      gnss_match_tolerance_s: 0.1
+      init_window_s: 2.0
+      init_timeout_s: 10.0
+      min_init_displacement_m: 0.5
+      ring_file: ""
+      branches_file: ""
+      stops_file: ""
+      init_forward_only: true        # выставка только на путь по курсу (+s): встречный путь в 3.5 м
+      init_forward_max_cross_m: 50.0 # старт вне карты (депо) — всё равно путь по курсу
+      init_baseline_tol_m: 1.0       # пара фиксов с базой антенн дальше от 12.44 м — шум
+      reference: [55.810367, 37.462267, 168.0]
+      # Коррекция s по фиксам GNSS после выставки (любая антенна): антенна -> проекция на путь
+      # -> base_link -> телепорт s. Выключатель — gnss_correction.
+      gnss_correction: true         # коррекция по GNSS после выставки
+      gnss_corr_min_status: 2        # фикс не хуже RTK/GBAS (автономный — ошибка в метры)
+      gnss_corr_max_cross_m: 2.0     # антенна дальше от пути — фикс отбрасывается, м
+      gnss_corr_require_pair: false   # false — достаточно фикса одной антенны
+      gnss_corr_pair_tol_m: 1.0      # base_link по двум антеннам расходится больше — пара отбрасывается; и разброс поправок в окне, м
+      gnss_corr_window_s: 1.0        # окно проверки: поправки s за окно должны совпадать ...
+      gnss_corr_min_fixes: 5         # ... и их не меньше (фикс, застывший со свежей меткой, не пройдёт)
+      gnss_corr_max_rate: 0.5        # поправка за окно плывёт быстрее — фикс застыл (у настоящего ≈ 0), м/с
+      gnss_corr_gate_k: 3.0          # окно поправки s — 3σ накопленной ошибки пути (интегратор) ...
+      gnss_corr_gate_min_m: 3.0      # ... не меньше, м
+      gnss_corr_gate_m: 50.0         # ... не больше, м (окно проекции ±60 м)
+      gnss_corr_max_age_s: 0.3       # метка фикса дальше от оценки — отбрасывается (запаздывающие фиксы — мусор), с
+      gnss_corr_min_interval_s: 1.0  # коррекция не чаще, с
+      gnss_corr_sigma_m: 0.3         # неопределённость s после коррекции, м
+      # Перепривязка к другому пути (заезд на ветку, ошибка больше окна проекции ±60 м): серия фиксов
+      # одной антенны в движении -> курс -> путь по курсу (на кольце только +s) -> route, s, направление.
+      gnss_reloc: false               # перепривязка к другому пути (только при gnss_correction)
+      gnss_reloc_max_cross_m: 5.0    # антенна дальше от нового пути — нет (геометрия веток грубая, ~3.5 м)
+      gnss_reloc_margin_m: 2.0       # новый путь ближе текущего хотя бы на, м (иначе — ложный прыжок)
+      gnss_reloc_min_disp_m: 1.0     # смещение антенны за серию для курса не меньше, м

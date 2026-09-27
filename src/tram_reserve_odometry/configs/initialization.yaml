@@ -1,0 +1,7 @@
+# Начальные условия до выставки по GNSS (выставка и коррекция положения — map.yaml).
+# После выставки положение и курс берутся с 1D-карты.
+reserve_odometry:
+  ros__parameters:
+    initialization:
+      initial_position: [0.0, 0.0, 0.0]
+      initial_velocity: 0.0

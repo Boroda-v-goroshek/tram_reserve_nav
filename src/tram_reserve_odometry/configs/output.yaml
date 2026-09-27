@@ -1,0 +1,19 @@
+# Выходы (контракт жюри) и система координат.
+# frame: mgrs (UTM зоны utm_zone минус угол 100-км квадрата mgrs_origin),
+#        enu (внутренняя система карты, опорная точка map.reference) или relative (от старта).
+# point: base_link (ось передней тележки на уровне головки рельса) или master (отладка).
+reserve_odometry:
+  ros__parameters:
+    output:
+      velocity_topic: /result/velocity   # tram_vehicle_msgs/VelocitySensor (м/с)
+      position_topic: /result/position   # nav_msgs/Odometry
+      frame_id: map
+      child_frame_id: tram_base_link
+      publish_debug: true
+      frame: mgrs
+      utm_zone: 37
+      mgrs_origin: [300000.0, 6100000.0]
+      point: base_link
+      # Скорость в /result/velocity — оценка на (метка − задержка): эталон запаздывает
+      # относительно тележек; положение считается по незадержанной скорости.
+      velocity_delay_s: 0.08
